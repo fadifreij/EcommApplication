@@ -1,0 +1,26 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Products</li>
+    </ol>
+</nav>
+
+<div *ngIf="isWorking">Please wait ...</div> 
+<div *ngIf="!isWorking">
+    <div class="form-group col-md-4">
+        <label for="mainmenuSelect">Select Main menu to display its items</label>
+        <select  class="form-control" name="mainmenuSelect" [(ngModel)]="selectedmainId" (change)="displaySubMenu()"  >
+          <option [value]="item.id" *ngFor="let item of mainmenulist">{{item.mainMenuName}} </option>
+         </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="mainmenuSelect">Select Sub Main menu to display its items</label>
+        <select  class="form-control" name="submainmenuSelect" [(ngModel)]="selectedsubmainId" (change)="displayProducts()" >
+          <option [value]="item.id" *ngFor="let item of submainmenulist">{{item.subMainMenuName}} </option>
+         </select>
+    </div>
+<div *ngIf="isloading"> Please wait loading data ...</div>
+  <div *ngIf="!!selectedmainId&&!!selectedsubmainId"  >
+  <table-template [modelnumber] ="3" [mainmenuId] = "selectedmainId" [submainmenuId]="selectedsubmainId"></table-template>
+</div>
+</div>

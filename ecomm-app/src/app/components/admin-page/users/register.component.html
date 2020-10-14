@@ -1,0 +1,88 @@
+<div class="mt-3" id="all">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">New account / Sign in</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-6">
+            <div class="box">
+              <h1>New account</h1>
+              <p class="lead">Not our registered customer yet?</p>
+              <p>With registration with us new world of fashion, fantastic discounts and much more opens to you! The whole process will not take you more than a minute!</p>
+              <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
+              <hr>
+              
+              <form  #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && onRegisterSubmit(registerForm)">
+               
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input id="name" name="name" [(ngModel)]="registerModel.name" #name ="ngModel" type="text" class="form-control" [ngClass]="{ 'is-invalid': registerForm.submitted && name.invalid }" required>
+                  <div *ngIf="registerForm.submitted && name.invalid" class="invalid-feedback">
+                    <div *ngIf="name.errors.required"> Name is required</div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" [(ngModel)]="registerModel.email" #email="ngModel" type="text" class="form-control"  [ngClass]="{ 'is-invalid': registerForm.submitted && email.invalid }" required email>
+                  <div *ngIf="registerForm.submitted && email.invalid" class="invalid-feedback">
+                    <div *ngIf="email.errors.required">Email is required</div>
+                    <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input id="password" name ="password" [(ngModel)]="registerModel.password" #password="ngModel" type="password" class="form-control"  [ngClass]="{ 'is-invalid': registerForm.submitted && password.invalid }" required minlength="6">
+                  <div *ngIf="registerForm.submitted && password.invalid" class="invalid-feedback">
+                    <div *ngIf="password.errors.required">Password is required</div>
+                    <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" [disabled]= "isRegister" ><i [hidden]="isRegister" class="fa fa-user-md"></i> <span [hidden]="!isRegister" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Register</button>
+                  
+                </div>
+              </form>
+              <error-alert  *ngIf="registerError" [errorModel] ="registerError" ></error-alert>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="box">
+              <h1>Login</h1>
+              <p class="lead">Already our customer?</p>
+              <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+              <hr>
+              <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && onLoginSubmit(loginForm)">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input id="emailtxt" name="email_txt"  type="text" class="form-control" [(ngModel)]="loginModel.email" #emailtxt="ngModel"   [ngClass]="{ 'is-invalid': loginForm.submitted && emailtxt.invalid }" required email>
+                  <div *ngIf="loginForm.submitted && emailtxt.invalid" class="invalid-feedback">
+                    <div *ngIf="emailtxt.errors.required">Email is required</div>
+                    <div *ngIf="emailtxt.errors.email">Email must be a valid email address</div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input id="passwordtxt" name="password_txt" type="password" class="form-control" [(ngModel)]="loginModel.password" #passwordtxt ="ngModel"   [ngClass]="{ 'is-invalid': loginForm.submitted && passwordtxt.invalid }" required minlength="6">
+                  <div *ngIf="loginForm.submitted && passwordtxt.invalid" class="invalid-feedback">
+                    <div *ngIf="passwordtxt.errors.required">Password is required</div>
+                    <div *ngIf="passwordtxt.errors.minlength">Password must be at least 6 characters</div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" [disabled]="isLogin"><i [hidden]="isLogin" class="fa fa-sign-in"></i><span [hidden]="!isLogin" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Log in</button>
+                </div>
+              </form>
+              <error-alert  *ngIf="loginError" [errorModel]="loginError" ></error-alert>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

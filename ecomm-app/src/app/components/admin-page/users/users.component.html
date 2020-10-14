@@ -1,0 +1,53 @@
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">User Management</li>
+    </ol>
+</nav>
+  <div class="card">
+    <div class="card-header">Search Area</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-8">
+                <h1>List users by username , email or both</h1>
+                <div class="row">
+                    <div class="col-md-4"><input type= "text" [(ngModel)]="emailCriteria" placeholder="Search by username..." class="form-control"></div>
+                    <div class="col-md-4"><input type= "text" [(ngModel)]="usernameCriteria" placeholder="Search by email..." class="form-control"></div>
+                    <div class="col-md-4"><button type= "button" style="width:150px" value ="List users " (click)="getListofUsersBy()" class="btn btn-primary"><span [hidden]="!isLoadingSpecial" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>List users</button></div>
+                </div>
+            </div>
+          <!--  <div style="border-left:solid lightgray"  class="col-xl-4 "><h1>List all users </h1><button type="button"  style="width:150px" (click)="getListOfUsers()" class="btn btn-primary"><span [hidden]="!isLoading" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>List all</button></div>-->
+        </div>
+    </div>
+    <div class="card-body">
+      <error-alert *ngIf="error" [errorModel]="error"></error-alert>
+      <table *ngIf="userList.length !=0" class="table">
+        <thead>
+          <tr>
+          
+            <th scope="col">User name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Is Active ?</th>
+            <th scope="col">List of Roles</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor ="let user of userList">
+           
+            <td>{{user.userName}}</td>
+            <td>{{user.email}}</td>
+            <td><span style="font-size:16px" *ngIf="user.isActive" class="badge badge-pill badge-success">Active</span><span style="font-size:16px" *ngIf="!user.isActive" class="badge badge-pill badge-danger">Not active</span></td>
+            <!--<td><table><tr *ngFor="let role of user.roleNamesForUser"><td>{{role}}</td></tr></table></td>-->
+            <td><ul><li *ngFor="let role of user.roleNamesForUser">{{role}}</li></ul></td>
+            <td><a   [routerLink]="['/Admin/Users/Edit-User']" [queryParams]="{ userId: user.userId ,action: action }"  class="btn btn-warning">Edit User</a></td>
+          </tr>
+         
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+

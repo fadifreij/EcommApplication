@@ -1,0 +1,27 @@
+<li (mousemove)="onClick(false)" class="nav-item dropdown menu-large comp-nav" ><a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">{{mainMenuName}}<b class="caret"></b></a>
+    <ul #navbarid class="dropdown-menu megamenu">
+     
+      <li>
+        <div class="row">
+          <ng-template ngFor let-col [ngForOf]="list">
+           <div  class="col-md-6 col-lg-3">
+              <ng-template ngFor let-item [ngForOf]="col" >
+              <h5>{{item.subMainMenuName}} </h5>
+              
+                <ul class="list-unstyled mb-3">
+                   <li *ngFor="let product of item.products" (click)="onClick(true)" class="nav-item"><a [state] ="{'productId':product.id}" [routerLink]="['/Items',mainMenuName,item.subMainMenuName, product.productName ] " class="nav-link">{{product.productName}}</a></li>
+                </ul>
+               </ng-template>
+          </div>
+       
+        </ng-template>
+        <div *ngIf="isBanner" class="col-md-6 col-lg-3">
+          <div class="banner"><a href="#"><img src="./assets/img/banner.jpg" alt="" class="img img-fluid"></a></div>
+          <div class="banner"><a href="#"><img src="./assets/img/banner2.jpg" alt="" class="img img-fluid"></a></div>
+        </div>  
+       </div>
+     
+      </li>
+   
+    </ul>
+  </li>

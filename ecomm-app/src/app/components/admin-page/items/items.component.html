@@ -1,0 +1,324 @@
+
+  
+<div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Items</li>
+      <li class="breadcrumb-item active" aria-current="page">{{(islist)?'List':'Insert new item'}}</li>
+    </ol>
+    
+    <ol class="breadcrumb" *ngIf="!(selectedTextMainMenu==''&&selectedTextSubMainMenu==''&&selectedTextProduct=='')">
+        <li class="breadcrumb-item" *ngIf="selectedTextMainMenu!=''"><a href="#">{{selectedTextMainMenu}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedTextSubMainMenu!=''">{{selectedTextSubMainMenu}}</li>
+        <li class="breadcrumb-item active" aria-current="page" *ngIf="selectedTextProduct!=''">{{selectedTextProduct}}</li>
+      </ol>
+  </nav>
+ <error-alert *ngIf="errMessage" [errorModel]="errMessage"></error-alert>
+   
+  </div>
+  <div *ngIf="isWorking">Please wait...</div>
+  <!--List section-->
+    <div id ="list" *ngIf="!isWorking&&islist">  
+    
+     <div class="row">
+        <div class="col-xl-3  mb-md-2">
+            <div ><label >Select main menu name :</label></div> 
+            <select class="form-control" [(ngModel)] ="selectedMainMenu"  (change)="getSubMainMenuList($event)" >
+                <option [disabled]="item.dis" *ngFor="let item of mainMenuList" [value]="item.id"> {{item.name}}</option>
+            </select>
+        </div>
+         
+        <div class="col-xl-3 mb-md-2">
+            <div ><label >Select sub main menu name :</label></div> 
+            <select class="form-control" [(ngModel)]="selectedSubMainMenu" (change) ="getProduct($event)" >
+                <option disabled [hidden]="!isloading">Please wait ...</option>
+                <option disabled value =""></option>
+                <option [disabled]="item.dis" *ngFor="let item of subMainMenuList" [value]="item.id"> {{item.name}}</option>
+               
+            </select>
+        </div>
+         
+        <div class="col-xl-3">
+            <div ><label >Select product :</label></div> 
+            <select class="form-control"  [(ngModel)]="selectedProduct" (change)="onProductChange($event)" >
+                <option disabled [hidden]="!isloading">Please wait ...</option>
+                <option disabled value =""></option>
+                <option  *ngFor="let item of productList" [value]="item.id"> {{item.name}}</option> 
+            </select>
+        </div>
+        <div class="col-xl-3  mt-4">
+              <button class="btn btn-primary" type="button" [disabled]="isSearching || (selectedTextMainMenu==''||selectedTextSubMainMenu==''||selectedTextProduct=='')" (click)="getItems()">
+                <span class="spinner-border spinner-border-sm" [hidden]="!isSearching" role="status" aria-hidden="true"></span>
+               {{(isSearching)?'Searching...':'View Items'}} 
+              </button>
+        </div>
+     </div>
+    
+     <div *ngIf="!!itemsList" class="row mt-3 mb-3 ml-0">
+        <input type="button" class="btn btn-success" value="Add new item" (click)="swichTo('Insert')">
+     
+    </div> 
+     <div class="row mt-5" *ngIf="!!itemsList&&itemsList.length!=0"> 
+       <div class="col-md-6 mt-3"><p class="text-secondary">Total : ( {{ItemsCount}} pcs)</p></div>  
+       <div class="col-md-6 mw-100  mb-1" >  <input type="search" [(ngModel)]="query" style="width:400px" class="form-control" placeholder="Search...." (input)="dofilter()"/></div>
+        <div class="table-responsive mb-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="2">Item Name</th>
+                  <th>When Added</th>
+                  <th>Quantity</th>
+                  <th>Unit price</th>
+                  <th>Discount</th>
+                  <th></th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemsListDisplay ">
+                 
+                  <td><a href="#"><img *ngIf="item.itemPicturePath !=''" class="rounded" src="{{imagesRootPath}}/{{item.itemPicturePath}}" alt="{{imagesRootPath}}/{{item.itemPicturePath}}.jpg"></a></td>
+                  <td><a href="#">{{item.itemName}}</a></td>
+                  <td>{{item.whenAdded | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{item.qty}}</td>
+                  <td>£ {{item.price}}</td>
+                  <td>% {{item.discount}}</td>
+                  <td><input type="button" [hidden]="confirmDelete[item.id]" class="btn btn-outline-warning mb-1" style="width:100px" value="Update" (click)="getItem(item.id)"><input type="button" class="btn btn-outline-danger mb-1 " [hidden]="confirmDelete[item.id]" style="width:100px" value="Delete" (click)="confirmDelete[item.id]=true">
+                    <span [hidden]="!confirmDelete[item.id]" >Are you sure you want to delete ? <input type="button" class="btn btn-success" (click)="deleteItem(item.id)" value="Yes"/><input type="button" class="btn btn-danger" value="No" (click)="confirmDelete[item.id]=false"/></span>
+                    </td>
+               
+                </tr>
+               
+              </tbody>
+             
+            </table>
+          </div>
+     </div>
+
+
+  </div>
+
+  <!-- Insert section -->
+ <div id="insert" *ngIf="!islist">
+
+ <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="row mb-3 ml-2">
+        <input type="button" class="btn btn-primary" value="Back to list" (click)="swichTo('List')">
+        <button class="btn btn-success" type="submit" [disabled]="isInserting" >
+            <span class="spinner-border spinner-border-sm" [hidden]="!isInserting" role="status" aria-hidden="true"></span>
+           {{(isInserting)?'Please wait...':buttonLabelName}} 
+        </button>
+        <input type="button" class="btn btn-warning" value="Clear fields" (click)="clearFields()">
+    </div> 
+ 
+    <div class="card p-3" >
+        <div class="row">
+            <div class="col-md-12 text-center">
+               <h1> Adding new item</h1>
+            </div>
+        </div>
+      
+        
+        <div class="row">
+        <div class="col-md-6">
+           <div class="row ml-0 mb-2" *ngIf="f.id.value !=0" ><label>Item Id : {{f.id.value}}</label></div> 
+           <div class="row mb-2">
+              
+                <div class="col-md-8">
+                    
+                   
+                    <label for="ItemName">Item Name </label>
+                  
+                    <input type="text"  style="text-transform:uppercase"
+                           class="form-control"  formControlName="itemName"
+                           placeholder="item name" (focusout)="checkItemName(f.itemName.value ,'itemName')"
+                           [ngClass]="{ 'is-invalid':submitted && f.itemName.errors || f.itemName.touched && f.itemName.errors ||  f.itemName?.errors?.nameExists }" 
+                    />
+                    <div class="invalid-feedback">
+                     <span *ngIf="f.itemName.errors?.required">  Please provide an item name.</span> 
+                     <span *ngIf="f.itemName.errors?.nameExists">  Item name exists, please chooose another name.</span> 
+                    </div>
+                    
+                </div>
+           </div>
+           <div class="row">
+            <div class="form-group col-md-12">
+                <label for="ItemName">Item Long Name </label>
+                <input type="text" class="form-control" formControlName="itemLongName" placeholder="item long name">
+             </div>
+           </div>
+           <div class="row">
+                 <div class="form-group col-md-4">
+                    <label for="ItemName">Item Code </label>
+                    <input type="text" class="form-control" formControlName="itemCode" placeholder="item code"
+                    (focusout)="checkItemName(f.itemCode.value,'itemCode')"
+                    [ngClass]="{ 'is-invalid':submitted && f.itemCode.errors || f.itemCode.touched && f.itemCode.errors ||  f.itemCode?.errors?.nameExists }" 
+                    >
+                    <div class="invalid-feedback">
+                        <span *ngIf="f.itemCode.errors?.required">  Please provide an item code.</span> 
+                        <span *ngIf="f.itemCode.errors?.nameExists">  Item code exists, please chooose another code.</span> 
+                       </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label >Show Item ? </label>
+                    <mat-slide-toggle checked="true" color="primary" formControlName="show" >{{(f.show.value)?"Visible":"Hidden"  }} </mat-slide-toggle>
+                </div>
+           </div>
+           <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="Qty">Qty </label>
+                    <input type="number" min="1" class="form-control" formControlName="qty" placeholder="Qty"
+                    [ngClass]="{ 'is-invalid':submitted && f.qty.errors || f.qty.touched && f.qty.errors || f.qty.touched && f.qty.value <1  }" 
+                    />
+                    <div class="invalid-feedback">
+                        <span *ngIf="f.qty.errors?.required">  Qty cannot be null</span> 
+                        <span *ngIf="f.qty.value < 1 && !f.qty.errors?.required">  qty should be > 0</span> 
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Pricelbl">Price </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="price" placeholder="Price" aria-describedby="inputGroupPrepend2" 
+                        [ngClass]="{ 'is-invalid':submitted && f.price.errors || f.price.touched && f.price.errors || f.price.touched && f.price.value <= 0  }" 
+                        />
+                        
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend1" style="height:35px">£</span>
+                        </div>
+                    </div>
+                    <div style="color:red">
+                        <span *ngIf="f.price.touched && f.price.errors?.required">  price cannot be null</span> 
+                        <span *ngIf="f.price.value <= 0 && !f.price.errors?.required">  price should be > 0</span> 
+                    </div>
+                    
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Discount">Discount </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="discount" placeholder="Discount" aria-describedby="inputGroupPrepend2" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend2" style="height:35px">%</span>
+                        </div>
+                    </div>
+                </div>
+           </div>
+           <div class="row">
+            <div class="col-md-6">
+                <label for="Category">Category </label>
+                <ng-autocomplete
+                formControlName ="category"
+                [data]="categoryList"
+                [searchKeyword]="'name'"
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">                                 
+              </ng-autocomplete>
+               
+              <ng-template  #itemTemplate let-item>
+              <a  [innerHTML]="item.name"></a>
+              </ng-template>
+               
+              <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              </ng-template>
+                <!-- <input type="text" class="form-control" formControlName="categoryId" placeholder="Category">-->
+                <div style="color:red">
+                    <span *ngIf="f.category.touched && f.category.errors?.required">  provide category</span> 
+                  
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Brand">Brand </label>
+                <ng-autocomplete
+                formControlName ="brand" 
+                [data]="brandList"
+                [searchKeyword]="'name'"
+                [itemTemplate]="brandTemplate"
+                [notFoundTemplate]="notFoundBrandTemplate">                                 
+              </ng-autocomplete>
+               
+              <ng-template  #brandTemplate let-item>
+              <a [innerHTML]="item.name"></a>
+              </ng-template>
+               
+              <ng-template #notFoundBrandTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              </ng-template>
+               <!-- <input type="text" class="form-control" formControlName="brandId" placeholder="Brand">-->
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Size">Size </label>
+                <ng-autocomplete
+                formControlName ="size" 
+                [data]="sizeList"
+                [searchKeyword]="'name'"
+                [itemTemplate]="sizeTemplate"
+                [notFoundTemplate]="notFoundSizeTemplate">                                 
+              </ng-autocomplete>
+               
+              <ng-template  #sizeTemplate let-item>
+              <a [innerHTML]="item.name"></a>
+              </ng-template>
+               
+              <ng-template #notFoundSizeTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <!--  <input type="text" class="form-control" formControlName="sizeId" placeholder="Size">-->
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Color">Color </label>
+                <input type="color" class="form-control" formControlName="productColor" placeholder="Color">
+            </div>
+            
+          </div>
+           <div class="row">
+              <div class="form-group col-md-12">
+                <label for="itemDetail">Item Detail</label>
+                <textarea class="form-control" id="itemDetail" formControlName="itemDetails" rows="3"></textarea>
+              </div>
+
+           </div>
+           
+       </div>
+       <div class="col-md-6 ">
+        <div class="row ml-1 mb-4">
+        <div class="col-md-4 ">
+              <input type="button" value="Add image to item" class="btn btn-primary " (click)="file.click()"/>
+              <input type="file" hidden="true" accept="image/*" #file (change)="addImage(file.files)"/>
+             
+          </div>
+          <div class="col-md-4">
+            <input type="button" value="Clear image item" class="btn btn-warning" (click)="clearImageItem()"/>
+          </div>
+        </div> 
+           <div class="col-md-12"><img width="500" class="img-thumbnail" [src]="imgUrl" alt="no image"></div>
+       </div>
+      
+    </div> <!-- end of row under form-->
+  
+</div> <!--end of card-->
+<!-- additional images -->
+<div class="card mt-1" style="width: 100%">
+    <div class="card-header ">
+         
+          <a  class="btn btn-primary " (click)="files.click()">Add more images ...</a>
+          <input type="file" hidden="true" #files  multiple (change)="addImages(files.files)" />
+    </div>
+  
+    <div class="card-body">
+     <div *ngIf="imagesList?.length==0">No images for this item </div>
+     <div *ngIf="imagesList?.length!=0">
+        <table class="table">
+            <tr *ngFor="let img of imagesList ">
+                <td><img class="img-thumbnail" width=400 height="400" [src]="(img.newImage=='')?img.imagePath:img.newImage" alt="no images"></td>
+                <td><div class="text-success">{{img.imageName}}</div></td>
+                <td><input type="button" class="btn btn-danger" value="Remove" (click)="removeFromNewImagesList(img.imageName)"/></td></tr>
+        </table>
+    </div>
+    </div>
+  </div>
+</form>
+</div>

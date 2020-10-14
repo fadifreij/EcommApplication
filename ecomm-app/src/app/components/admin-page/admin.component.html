@@ -1,0 +1,43 @@
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="">
+        
+    <div class="p-4">
+     
+    <ul class="list-unstyled components mb-5">
+      <li [class.active] ="selectedActiveIndex==0" (click)="setActiveIndex(0)">
+        <a [routerLink] = "['/Admin']"><span class="fa fa-home mr-3"></span> Home</a>
+      </li>
+      <li *auth="true" roles="admin" [class.active] ="selectedActiveIndex==1" (click)="setActiveIndex(1)" >
+          <a [routerLink] = "['/Admin/Users']"><span class="fa fa-user mr-3"></span> Users Management</a>
+      </li>
+      <li   [class.active] ="selectedActiveIndex==2" (click)="setActiveIndex(2)">
+      <a [routerLink] = "['/Admin/MainMenu']"><span class="fa fa-briefcase mr-3"></span> Mainmenu </a>
+      </li>
+      <li  [class.active] ="selectedActiveIndex==3" (click)="setActiveIndex(3)">
+      <a [routerLink] = "['/Admin/SubMainMenu']"><span class="fa fa-briefcase mr-3"></span> Sub Mainmenu </a>   
+      
+      </li>
+      <li  [class.active] ="selectedActiveIndex==4" (click)="setActiveIndex(4)">
+        <a [routerLink] = "['/Admin/Products']"><span class="fa fa-product-hunt mr-3"></span> Products</a>
+      </li>
+      <li  [class.active] ="selectedActiveIndex==5" (click)="setActiveIndex(5)">
+        <a [routerLink] = "['/Admin/Items']"><span class="fa fa-shopping-cart mr-3"></span> Items</a>
+        </li>
+    </ul>
+
+    
+
+    <div class="footer">
+        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Page Content  -->
+<div id="content" class="p-4 p-md-5 pt-5">
+    <router-outlet></router-outlet>
+</div>
+</div>

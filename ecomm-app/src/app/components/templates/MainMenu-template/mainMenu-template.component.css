@@ -1,0 +1,15 @@
+   .comp-nav{ 
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    padding: 23px 5px !important;
+    
+   }
+   .comp-nav > a{
+    color: #555 !important;
+    
+   }
+   li.comp-nav:hover {
+    background:#4fbfa8 !important;
+   }
+   

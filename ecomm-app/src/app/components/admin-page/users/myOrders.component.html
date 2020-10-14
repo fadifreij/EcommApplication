@@ -1,0 +1,43 @@
+<mat-accordion>
+  
+    <mat-expansion-panel *ngFor="let order of list" (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{order.whenAdded | date:'fullDate'}}
+        </mat-panel-title>
+        <mat-panel-description>
+         
+                <div class="col-md-6">number of items: {{order.numberOfItems}}</div>
+                <div class="col-md-6"> totals :  £{{order.totalAmount | number : '1.2-2'}}</div>
+           
+         
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>List of orders</p>
+      <table class="table">
+        <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Discount</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.orderDetails">
+              <th scope="row"><img  class="img-circle" width="50" *ngIf="item?.items.itemPicturePath"  src="{{imagesRootPath}}/{{item?.items.itemPicturePath}}"  alt="" ></th>
+              <td>{{item.items.itemName}}</td>
+              <td>{{item.qty}}</td>
+              <td>% {{item.discount}}</td>
+              <td>£{{item.price | number : '1.2-2'}}</td>
+            </tr>
+                        
+          </tbody>
+        
+         
+      </table>
+    </mat-expansion-panel>
+  </mat-accordion>
+  

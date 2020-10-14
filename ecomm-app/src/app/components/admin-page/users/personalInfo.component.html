@@ -1,0 +1,180 @@
+
+
+   
+    <div id="all" class="mt-3">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">My account</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-3">
+              <!--
+              *** CUSTOMER MENU ***
+              _________________________________________________________
+              -->
+              <div class="card sidebar-menu">
+                <div class="card-header">
+                  <h3 class="h4 card-title">Customer section</h3>
+                </div>
+                <div class="card-body">
+                  <ul class="nav nav-pills flex-column">
+                    <a  (click)="pageNumber=1" class="nav-link "  [ngClass] ="{'active':pageNumber==1}"><i class="fa fa-list"></i> My orders</a>
+                    <a  (click)="pageNumber=2;" class="nav-link"  [ngClass] ="{'active':pageNumber==2}"><i class="fa fa-heart"></i> My wishlist</a>
+                    <a (click)="pageNumber=3;" class="nav-link " [ngClass] ="{'active':pageNumber==3}"><i class="fa fa-user"></i> My account</a>
+                    <a  (click)="logout()" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a></ul>
+                </div>
+              </div>
+              <!-- /.col-lg-3-->
+              <!-- *** CUSTOMER MENU END ***-->
+            </div>
+            <div class="col-lg-9">
+              <div class="box" *ngIf="pageNumber==1"><div class="mb-3" style="display:flex;justify-content:center;"> My Orders</div>
+                <my-orders></my-orders>
+              </div>
+              <div *ngIf="pageNumber==2"> <mywhishlist></mywhishlist></div>
+              <div class="box" *ngIf="pageNumber==3">
+                <h1>My account ( {{userEmail}} )</h1> 
+                <p class="lead">Change your password here.</p>
+                <p class="text-muted">In order to reset your password ,please provide your old password and the new password .</p>
+                <h3>Change password</h3>
+                <form #resetForm="ngForm" [mustMatch]="['newPassword', 'confirmNewPassword']"  (ngSubmit)="resetForm.form.valid && onResetSubmit(resetForm)">
+                                   
+                    <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password_old">Old password</label>
+                        <input   name="oldPassword" id="password_old" type="password" class="form-control" [(ngModel)]="resetModel.oldPassword" #oldPassword="ngModel" [ngClass]="{ 'is-invalid': resetForm.submitted && oldPassword.invalid }" required minlength="6">
+                        <div *ngIf="resetForm.submitted && oldPassword.invalid" class="invalid-feedback">
+                            <div *ngIf="oldPassword.errors.required">Old Password is required</div>
+                            <div *ngIf="oldPassword.errors.minlength">Old Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password_1">New password</label>
+                       <input   name="newPassword" id="password_1" type="password" class="form-control" [(ngModel)]="resetModel.newPassword"  #newPassword="ngModel"  [ngClass]="{ 'is-invalid': resetForm.submitted && newPassword.invalid }" required minlength="6">
+                       <div *ngIf="resetForm.submitted && newPassword.invalid" class="invalid-feedback">
+                        <div *ngIf="newPassword.errors.required">New Password is required</div>
+                        <div *ngIf="newPassword.errors.minlength">New Password must be at least 6 characters</div>
+                       
+                       </div>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password_2">Retype new password</label>
+                        <input id="password_2" name="confirmNewPassword" type="password" class="form-control" [(ngModel)]="resetModel.confirmNewPassword"  #confirmNewPassword="ngModel"  [ngClass]="{ 'is-invalid': resetForm.submitted && confirmNewPassword.invalid }" required minlength="6" >
+                        <div *ngIf="resetForm.submitted && confirmNewPassword.invalid" class="invalid-feedback">
+                            <div *ngIf="confirmNewPassword.errors.required">Confirm New Password is required</div>
+                            <div *ngIf="confirmNewPassword.errors.minlength">Confirm New Password must be at least 6 characters</div>
+                            <div *ngIf="confirmNewPassword.errors.mustMatch">Passwords must match</div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                  <!-- /.row-->
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary"><i [hidden]="isResetting" class="fa fa-save"></i><span [hidden]="!isResetting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Save new password</button>
+                  </div>
+                </form>
+                <div class="text-success" *ngIf=" resultMsg!==''">{{resultMsg}}</div>
+                 <error-alert *ngIf="error" [errorModel]="error"></error-alert>
+                
+                <h3 class="mt-5">Personal details</h3>
+                <form>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="firstname">Firstname</label>
+                        <input id="firstname" name="firstname" [(ngModel)]="firstName"  type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <input id="lastname" name="lastname" [(ngModel)]="lastName" type="text" class="form-control">
+                      </div>
+                    </div>
+                  
+
+                  <div class="col-md-12 text-center">
+                    <button type="button" (click) ="updateName()" [disabled]="firstName==''||lastName==''" class="btn btn-primary"><i class="fa fa-save"></i> Update Name</button>
+                  </div>
+                </div>
+
+              </form>
+              <div class="text-success" *ngIf=" updateResultMsg!==''">{{updateResultMsg}}</div>
+                 <!--
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="company">Company</label>
+                        <input id="company" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="street">Street</label>
+                        <input id="street" type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                      <div class="form-group">
+                        <label for="city">Company</label>
+                        <input id="city" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      <div class="form-group">
+                        <label for="zip">ZIP</label>
+                        <input id="zip" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" class="form-control"></select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                      <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" class="form-control"></select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="phone">Telephone</label>
+                        <input id="phone" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="text" class="form-control">
+                      </div>
+                    </div>
+                  
+            -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+   

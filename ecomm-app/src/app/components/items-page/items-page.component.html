@@ -1,0 +1,204 @@
+<div class="loading" *ngIf="isLoading">loading</div>
+<div  id="all" class="mt-3">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Ladies</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-3">
+            <!--
+            *** MENUS AND FILTERS ***
+            _________________________________________________________
+            -->
+            <div class="card sidebar-menu mb-4">
+              <div class="card-header">
+                <h3 class="h4 card-title">Categories</h3>
+              </div>
+              <div class="card-body">
+              <!--  <ul class="nav nav-pills flex-column category-menu">-->
+                <!--  <li><a href="category.html" class="nav-link">Men <span class="badge badge-secondary">42</span></a>
+                -->   <ul class="list-unstyled">
+                  <li ><a (click)="filterBy('')" style="cursor:pointer" class="nav-link " [ngClass]="{'active':classActive===0}">All <span style="float:right" class="badge badge-secondary">{{categoryCount}}</span></a></li>
+                      <li *ngFor ="let cat of categories"><a [ngClass]="{'active':classActive===cat.id}" style="cursor:pointer" (click)="filterBy('cat',cat.id)" class="nav-link">{{cat.categoryName}} <span style="float:right" class="badge badge-secondary">{{cat.cnt}}</span></a></li>
+                     
+                 <!--    </ul>
+                  </li>--> 
+                 
+              </ul>
+              </div>
+            </div>
+            <div class="card sidebar-menu mb-4">
+              <div class="card-header">
+                <h3 class="h4 card-title">Brands <a style="cursor:pointer" (click)="clear('brand')" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="form-group subselect">
+                    <div *ngFor="let brand of brands" class="checkbox">
+                      <label>
+                        <input type="checkbox" [checked]="brand.checked" (change)="doChange(brand)" > {{brand.brandName}}  ({{brand.cnt}})
+                      </label>
+                    </div>
+                  </div>
+                  <button class="btn btn-default btn-sm btn-primary" (click)="filterBy('brand')"><i class="fa fa-pencil"></i> Apply</button>
+                </form>
+              </div>
+            </div>
+            <div class="card sidebar-menu mb-4">
+              <div class="card-header">
+                <h3 class="h4 card-title">Colours <a style="cursor:pointer" (click)="clear('color')" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="form-group subselect">
+                    <div *ngFor="let color of colors" class="checkbox">
+                      <label  >
+                        <input type="checkbox"[checked]="color.checked"   (change)="doChange(color)" >
+                      
+                       <input class="mx-2" style="width:100px" disabled  type="color" (click)="doChange(color)" value="{{color.colorName}}"/>  ({{color.cnt}})
+                     
+                      </label>
+                    </div>
+                     
+                  </div>
+                  <button class="btn btn-default btn-sm btn-primary" (click)="filterBy('color')"><i class="fa fa-pencil"></i> Apply</button>
+                </form>
+              </div>
+            </div>
+            <div class="card sidebar-menu mb-4">
+              <div class="card-header">
+                <h3 class="h4 card-title">Sizes <a style="cursor:pointer" (click)="clear('size')" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="form-group subselect">
+                    <div *ngFor="let size of sizes" class="checkbox">
+                      <label>
+                        <input type="checkbox"[checked]="size.checked"  (change)="doChange(size)" >
+                      
+                         {{size.sizeName}}  ({{size.cnt}})
+                     
+                      </label>
+                    </div>
+                     
+                  </div>
+                  <button class="btn btn-default btn-sm btn-primary" (click)="filterBy('size')"><i class="fa fa-pencil"></i> Apply</button>
+                </form>
+              </div>
+            </div>
+            <!-- *** MENUS AND FILTERS END ***-->
+            <div class="banner"><a href="#"><img src="assets/img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
+          </div>
+
+          <!-- RIGHT SIDE IMAGES SECTION -->
+          <div class="col-lg-9">
+            <div class="box">
+              <h1>Ladies</h1>
+              <p>In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide.</p>
+            </div>
+            <!-- FILTERING 2 FROM 25 AND PAGING -->
+            <div class="box info-bar">
+              <div class="row">
+                <div class="col-md-12 col-lg-4 products-showing">Showing <strong>{{(pageSize>list.length)?list.length:pageSize}}</strong> of <strong>{{list.length}}</strong> products</div>
+                <div class="col-md-12 col-lg-7 products-number-sort">
+                  <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
+                  
+                    <div class="products-number"><strong>Show</strong><a  (click)="display(9,'1')"  class="{{clsbutton9}}" >9</a><a (click)="display(18,'2')"  class="{{clsbutton18}}">18</a><a (click)="display(list.length,'3')" class="{{clsbuttonAll}}">All</a><span>products</span></div>
+                    <div class="products-sort-by mt-2 mt-lg-0"><strong>Sort by</strong>
+                      <select name="sort-by" [(ngModel)] ="sortBy" (change)="displaySorted()" class="form-control">
+                        
+                        <option value="price">Price</option>
+                        <option value="name">Name</option>
+                        
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- PRODUCT IMAGES START HERE -->
+            <div class="row products">
+              <div *ngFor ="let item of pageOfItems" class="col-lg-4 col-md-6">
+                <div class="product">
+                  <div class="wrapper">
+                   <!-- {{item.isWhishList}}-->
+                    <div (click)="addwhishlist(item)" [ngClass]="{'icon-wishlist':!item.isWhishList ,'icon-wishlist-full':item.isWhishList}" ></div>
+                  </div>
+                  <div class="flip-container">
+                    <div class="flipper">
+                      <div class="front"><a href="detail.html"><img src="{{imagesRootPath}}/{{item.itemPicturePath}}" alt="" class="img-fluid"></a></div>
+                      <div class="back"><a href="detail.html"><img src="{{imagesRootPath}}/{{item.itemPicturePath}}" alt="" class="img-fluid"></a></div>
+                    </div>
+                  </div><a href="detail.html" class="invisible"><img src="assets/img/product1.jpg" alt="" class="img-fluid"></a>
+                  <div class="text">
+                    <h3  ><a class="pb-3" href="detail.html">{{item.itemName}}</a></h3>
+                    <p class="price"> 
+                      <del><span *ngIf="item.discount!=0">£{{item.price}}</span></del>£{{item.price - item.price*item.discount/100}}
+                    </p>
+                    <p class="buttons"><a [routerLink]="['/Item-Detail',item.pId]" class="btn btn-outline-secondary">View detail</a><a (click)="addShoppingBasket(item)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                  </div>
+                  <!-- /.text-->
+                   <!-- /.ribbon-->
+                   
+                  <div *ngIf="item.discount!=0" class="ribbon sale">
+                    <div class="theribbon">{{item.discount}}%</div>
+                    <div class="ribbon-background"></div>
+                  </div>
+                <!--
+                  <div class="ribbon new">
+                    <div class="theribbon">NEW</div>
+                    <div class="ribbon-background"></div>
+                  </div>
+                 
+                  <div class="ribbon gift">
+                    <div class="theribbon">GIFT</div>
+                    <div class="ribbon-background"></div>
+                  </div>
+                -->
+                  <!-- /.ribbon-->
+                </div>
+                <!-- /.product            -->
+              </div>
+              
+            </div>
+            <div class="row "  >
+            
+              <jw-pagination  style="margin-left:350px" [pageSize]="pageSize"  [items]="list" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+            <!--
+            <div class="pages">
+              <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p>
+              <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                <ul class="pagination">
+                  <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                  <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                  <li class="page-item"><a href="#" class="page-link">2</a></li>
+                  <li class="page-item"><a href="#" class="page-link">3</a></li>
+                  <li class="page-item"><a href="#" class="page-link">4</a></li>
+                  <li class="page-item"><a href="#" class="page-link">5</a></li>
+                  <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                </ul>
+              </nav>
+            </div>
+          -->
+          </div>
+          <!-- /.col-lg-9-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
+  <div>
+    <div *ngFor ="let item of pageOfItems">{{item.name}}
+
+    </div>
+    <jw-pagination [items]="p" (changePage)="onChangePage($event)"></jw-pagination>
+  </div>
+  -->

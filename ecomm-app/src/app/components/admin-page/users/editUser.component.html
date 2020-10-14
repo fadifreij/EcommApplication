@@ -1,0 +1,51 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">User Management</li>
+      <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-header pb-0">
+      <h3>Email : {{email}}</h3>
+    </div>
+    <div class="card-body">
+    <div class="row">
+     <div class="col-xl-4">
+        <p class="card-text">User Id : {{userId}}</p>
+        <p class="card-text">User Name : {{username}}</p>
+        <p>
+          <label class="mr-2">Is Active ? : </label>
+          <mat-slide-toggle [checked]="isActive" color="primary" (change)="changeActive($event)"  ><span *ngIf="isActive" class="text-success">Active</span><span *ngIf="!isActive" class="text-danger">Not active</span></mat-slide-toggle>
+        </p>
+        <a (click)="saveEditUser()" class="btn btn-primary"> Update changes</a>
+        <a [routerLink] = "['/Admin/Users']" [queryParams]="{ action: userCompAction }" class="btn btn-warning"> Cancel changes</a>
+     </div>
+     <div class="col-xl-4  mt-4  mt-xl-0">
+         
+        <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action active">
+              User Role
+            </button>
+            <a *ngIf="roleNamesForUser.length == 0" class="list-group-item list-group-item-action">No roles selected</a>
+            
+            <button type="button" *ngFor="let role of roleNamesForUser" (click)="removeRole(role)" class="list-group-item list-group-item-action">{{role}} <span class="ml-3"> >> </span></button>
+           
+          </div>
+
+     </div>
+     <div class="col-xl-4  mt-4  mt-xl-0">
+     <div class="list-group">
+       
+        <button type="button" class="list-group-item list-group-item-action active">
+          Roles
+        </button>
+        <a *ngIf="roles.length == 0" class="list-group-item list-group-item-action">No roles to select</a>
+        <button *ngFor="let role of roles" (click)="addRole(role.roleName)" type="button" class="list-group-item list-group-item-action">  <span class="mr-3"><<</span> {{role.roleName}}</button>
+        
+      </div>
+    </div>
+    </div>
+</div>
+ </div>
+

@@ -1,0 +1,36 @@
+
+<div *ngIf="isWorking">Please wait data loading ...</div>
+<div *ngIf="!isWorking"> <a (click) ="openDialog('save')" class="btn btn-primary mb-2"><i class="fa fa-plus-square"></i><span>Add new</span></a>
+ 
+<div *ngIf="!!listToDisplay&&listToDisplay.length!=0">
+    <table class="greenTable">
+        <thead>
+        <tr>
+        <th>ID</th>
+        <th>{{(modelnumber==1)?'Main Menu Name' :((modelnumber==2)?'Sub Main Menu Name':'Products Name')}}</th>
+        <th>Show</th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+       
+        <tbody>
+        <tr *ngFor ="let name of listToDisplay "  >
+            <td>{{name.id}}</td>
+            <td>{{name.name}}</td>
+            <td>
+              <div *ngIf="name.active=='true'; else notShow">
+               Visible <span class="fa fa-eye"></span>
+              </div>
+              <ng-template #notShow>
+               Hidden <span class="fa fa-eye-slash"></span>
+              </ng-template> </td>
+              <td><a style="cursor:pointer" (click) ="openDialog('save',name)"><i class="fa fa-edit"></i>Update</a></td>
+              <td><a style="cursor:pointer" (click) ="openDialog('delete',name)"><i class="fa fa-trash"></i>Delete</a></td> 
+              
+    
+        </tr>  
+       
+        </tbody>
+        </table>
+      </div>

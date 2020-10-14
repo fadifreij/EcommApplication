@@ -1,0 +1,98 @@
+
+<div id="all">
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- breadcrumb-->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li aria-current="page" class="breadcrumb-item active">Checkout - Order review</li>
+          </ol>
+        </nav>
+      </div>
+      <div id="checkout" class="col-lg-12">
+        <div class="box">
+            <div   >
+
+                <div class="row" style="display:flex;justify-content: center;width:100%" >
+                    <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <address>
+                                    <strong>Obaju</strong>
+                                    <br>
+                                    {{postCode}} {{street}}
+                                    <br>
+                                    {{country}}
+                                    <br>
+                                    <abbr title="Phone">P:</abbr> {{phoneNumber}}
+                                </address>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <p>
+                                    <em>Date: {{deliveryDate | date:'EEEE, MMMM d, y' }}</em>
+                                </p>
+                                <p>
+                                    <em>Receipt #: {{receiptNo}}W</em>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center">
+                                <h1>Receipt</h1>
+                            </div>
+                           
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>#</th>
+                                        <th class="text-center">Price</th>
+                                        <th class="text-center">Discount</th>
+                                        <th class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of SelectedItems ">
+                                        <td class="col-md-9"><h4><em>{{item.items.itemName}}</em></h4></td>
+                                        <td class="col-md-1" style="text-align: center"> {{item.qty}} </td>
+                                        <td class="col-md-1 text-center">£{{item.items.price}}</td>
+                                        <td class="col-md-1 text-center">%{{item.discount}}</td>
+                                        <td class="col-md-1 text-center">£{{item.items.price*item.qty- item.items.price*item.qty*item.discount/100}}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td colspan=3 class="text-right">
+                                        <p>
+                                            <strong>Total after discount: £{{priceAfterDiscount}} </strong>
+                                        </p>
+                                        <p>
+                                            <strong>Shipping and handling: £{{deliveryPrice}} </strong>
+                                        </p></td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                                        <td class="text-center text-danger"><h4><strong>£{{priceAfterDiscount + deliveryPrice}}</strong></h4></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                        </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+        <!-- /.box-->
+      </div>
+    
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,18 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sub Main Menu</li>
+    </ol>
+  </nav>
+<div *ngIf="isWorking">Please wait ...</div> 
+<div *ngIf="errMessage !=''" class="alert alert-danger" >{{errMessage}}</div>
+<div *ngIf="!isWorking">
+<div class="form-group col-md-4">
+    <label for="mainmenuSelect">Select Main menu to display its items</label>
+    <select  class="form-control" name="mainmenuSelect" [(ngModel)]="selectedId"  >
+      <option [value]="item.id" *ngFor="let item of mainmenulist">{{item.mainMenuName}} </option>
+     </select>
+</div>
+<div *ngIf="selectedId!=''">
+  <table-template [modelnumber] ="2" [mainmenuId] = "selectedId"></table-template>
+</div>

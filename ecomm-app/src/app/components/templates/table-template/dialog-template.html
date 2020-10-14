@@ -1,0 +1,76 @@
+<div *ngIf ="isSaving">
+    <div class="text-center"> <img src="../../../../assets/img/AjaxLoader.gif"/></div>
+     <div class="text-center mt-3"> please wait ...</div>
+       
+   </div>
+   <div *ngIf ="!isSaving && data.dialogType =='save'">
+   <mat-card class="example-card">
+       <mat-card-header>
+       
+         <mat-card-title> {{(data.modelnumber==1)?'Main Menu Add - Update' :((data.modelnumber==2)?'Sub Main Menu Add - Update':'Products Add - Update')}}</mat-card-title>
+         <mat-card-subtitle>{{(data.id ==0)?'Add new title':'Update title ID :' + data.id}} </mat-card-subtitle>
+         <hr>
+       </mat-card-header>
+     
+       <mat-card-content>
+         <div class="alert alert-warning" >{{title}} </div>
+         <div class="alert alert-danger" *ngIf="errMessage !=''">{{errMessage}}</div>
+         <form class="m-3">
+               
+                 
+             <div class="row">
+               <mat-form-field >
+                   <mat-label>  {{(data.modelnumber==1)?'MainMenu Name':((data.modelnumber==2)?'SubMainMenu Name':'Product Name')}}</mat-label>
+                   <input matInput placeholder="name" [(ngModel)]="data.name" name="mainmenuName">
+               </mat-form-field>
+             </div>
+              <div class="row mb-2">   <mat-label>Active ?</mat-label>  </div>
+             <div class="row">
+              
+              
+               <mat-radio-group   aria-labelledby="example-radio-group-label"  [(ngModel)]="data.active"  name="active"  class="example-radio-group"
+                 >
+               <div class="col-md-6">  <mat-radio-button  value="true"> Yes   </mat-radio-button>  </div>
+               <div class="col-md-6">    <mat-radio-button  value="false"> No   </mat-radio-button> </div>
+               
+              
+               </mat-radio-group>
+             </div>
+              
+                
+               
+             </form>
+       </mat-card-content>
+       <mat-card-actions>
+         <button mat-stroked-button  (click)="closeDialog()">Cancel</button>
+         <!--<button mat-button class="btn btn-primary" [mat-dialog-close]="data" cdkFocusInitial>Save</button>-->
+         <button mat-button class="btn btn-primary" (click)="closeDialogwithSave()" cdkFocusInitial>Save</button>
+       </mat-card-actions>
+     </mat-card>
+   </div>
+   <div *ngIf ="!isSaving && data.dialogType =='delete'">
+     <mat-card >
+       <mat-card-header>
+       
+         <mat-card-title>{{(data.modelnumber==1)?'Main Menu Delete' :((data.modelnumber==2)?'Sub Main Menu Delete':'Products Delete')}}</mat-card-title>
+         <mat-card-subtitle> </mat-card-subtitle>
+   
+         <hr>
+       </mat-card-header>
+     <mat-card-content>
+       <div class="alert alert-danger" *ngIf="errMessage !=''">{{errMessage}}</div>
+       <div class="alert alert-danger"> Are you sure you want to delete Main menu name :
+         <ul>
+           <li> Id : {{data.id}}</li>
+           <li> {{(data.modelnumber==1)?'MainMenu Name':((data.modelnumber==2)?'SubMainMenu Name':'Product Name')}} : {{data.name}}</li>
+         </ul>
+   
+       </div>
+     </mat-card-content>
+     <mat-card-actions>
+       <button mat-stroked-button  (click)="closeDialog()">Cancel</button>
+       
+       <button mat-button class="btn btn-danger" (click)="closeDialogwithDelete()" cdkFocusInitial>Delete</button>
+     </mat-card-actions>
+     </mat-card>
+   </div>

@@ -1,0 +1,76 @@
+<div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Checkout - Delivery method</li>
+                </ol>
+              </nav>
+            </div>
+            <div id="checkout" class="col-lg-9">
+              <div class="box">
+                <form method="get" action="checkout3.html">
+                  <h1>Checkout - Delivery method</h1>
+                  <div class="nav flex-column flex-sm-row nav-pills"><a href="" [routerLink]="['/Checkout-1']" class="nav-link flex-sm-fill text-sm-center"> <i class="fa fa-map-marker">                  </i>Address</a><a href="" [routerLink]="['/Checkout-2']"  class="nav-link flex-sm-fill text-sm-center active"> <i class="fa fa-truck">                       </i>Delivery Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-money">                      </i>Payment Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-eye">                     </i>Order Receipt</a></div>
+                  <div class="content py-3">
+                    <table class="table">
+                     <tr><td></td><td *ngFor="let col of listoftimes">{{col}}</td></tr>
+                     <tr *ngFor="let row of listofDate">
+                         <td>{{row | date: 'dd/MM/yyyy' }}</td>
+                         <td *ngFor = "let col of listoftimes">
+                     
+                             <input id="rdo_dateTime" name="rdo_dateTime" [checked]="isChecked(row,col)" (change)="getDateTime(row,col)" [disabled]="disableDateTime(row,col)"  type="radio" />
+                          
+                            </td>
+                     </tr>
+                    </table>
+                  </div>
+                  <div class="box-footer d-flex justify-content-between"><a href="" [routerLink]="['/Checkout-1']" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to address</a>
+                    <a href="" [routerLink]="['/Checkout-3']" class="btn btn-primary" [class.disabled]="disableCheckout3">Continue to Payment Method<i class="fa fa-chevron-right"></i></a>
+                  </div>
+                </form>
+              </div>
+              <!-- /.box-->
+            </div>
+            <!-- /.col-md-9-->
+            <div class="col-md-3">
+              <div id="order-summary" class="card">
+                <div class="card-header">
+                  <h3 class="mt-4 mb-4">Order summary</h3>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>Order subtotal</td>
+                          <th>£{{totalAmount | number : '1.2-2'}}</th>
+                        </tr>
+                        <tr>
+                          <td>Shipping and handling</td>
+                          <th>£{{shippingCost | number : '1.2-2'}}</th>
+                        </tr>
+                        <tr>
+                          <td>Tax</td>
+                          <th>£0.00</th>
+                        </tr>
+                        <tr class="total">
+                          <td>Total</td>
+                          <th>£{{totalAmount + 10 | number : '1.2-2'}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-md-3-->
+          </div>
+        </div>
+      </div>
+    </div>

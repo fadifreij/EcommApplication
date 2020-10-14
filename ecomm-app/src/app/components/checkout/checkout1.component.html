@@ -1,0 +1,173 @@
+<div id="all">
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Checkout - Address</li>
+              </ol>
+            </nav>
+          </div>
+          <div id="checkout"  class="col-lg-9">
+            <div class="box">
+              <form name="checkoutForm" (ngSubmit)=" onSubmit(f)" #f="ngForm" >
+                
+                <h1>Checkout - Address</h1>
+                <div class="nav flex-column flex-md-row nav-pills text-center"><a href="checkout1.html" class="nav-link flex-sm-fill text-sm-center active"> <i class="fa fa-map-marker"></i>Address</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-truck">                       </i>Delivery Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-money">                      </i>Payment Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-eye">                     </i>Order Receipt</a></div>
+                <div class="content py-3">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="fName">First name</label>
+                       <div *ngIf="!firstName">
+                        <input id="fName"  name="fName" #fName="ngModel" [(ngModel)]="model.firstName" type="text" class="form-control" required>
+                        <span class="text-danger" *ngIf="fName.invalid && (fName.dirty || fName.touched || submitted)"> Please provide first name </span>
+                      </div>
+                        <p *ngIf="firstName!=''"><b>{{firstName}}</b></p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="lName">Last name</label>
+                       <div *ngIf="!lastName">
+                        <input id="lName"  name="lName" #lName="ngModel" [(ngModel)]="model.lastName" type="text" class="form-control" required>
+                        <span class="text-danger" *ngIf="lName.invalid && (lName.dirty || lName.touched || submitted)"> Please provide last name </span>
+                      </div>
+                        <p *ngIf="lastName!=''"><b>{{lastName}}</b></p>
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.shipping Address Card-->
+                  <div class="card">
+                    <div class="card-header">Shipping Address</div>
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="shippingAddress_PostCode">PostCode</label>
+                            <input id="shippingAddress_PostCode" name="shippingAddress_PostCode" #shippingAddress_PostCode="ngModel" [(ngModel)]="model.shippingAddress_postCode" type="text" class="form-control" required>
+                          
+                            <span class="text-danger" *ngIf="shippingAddress_PostCode.invalid && (shippingAddress_PostCode.dirty || shippingAddress_PostCode.touched || submitted)"> Please provide the post code </span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="shippingAddress_Street">Street</label>
+                            <input id="shippingAddress_Street" name="shippingAddress_Street"  #shippingAddress_Street="ngModel" [(ngModel)]="model.shippingAddress_street"  type="text" class="form-control" required>
+                            <span class="text-danger" *ngIf="shippingAddress_Street.invalid && (shippingAddress_Street.dirty || shippingAddress_Street.touched || submitted)"> Please provide street </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="shippingAddress_Country">Country</label>
+                            <input id=" shippingAddress_Country" name="shippingAddress_Country" #shippingAddress_Country="ngModel" [(ngModel)]="model.shippingAddress_country" type="text" class="form-control" required>
+                            <span class="text-danger" *ngIf="shippingAddress_Country.invalid && (shippingAddress_Country.dirty || shippingAddress_Country.touched || submitted)"> Please provide country </span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="shippingAddress_Telephone">Phone Number</label>
+                            <input id="shippingAddress_Telephone" name="shippingAddress_Phone"  #shippingAddress_Phone="ngModel" [(ngModel)]="model.shippingAddress_phoneNumber" type="text" class="form-control" required>
+                            <span class="text-danger" *ngIf="shippingAddress_Phone.invalid && (shippingAddress_Phone.dirty || shippingAddress_Phone.touched || submitted)"> Please provide phone number </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!-- /.Billing Address Card-->
+                  <div class="card mt-3">
+                    <div class="card-header">Billing Address</div>
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="billingAddress_PostCode">PostCode</label>
+                            <input id="billingAddress_PostCode" name="billingAddress_PostCode" [(ngModel)]="model.billingAddress_postCode" type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="billingAddress_Street">Street</label>
+                            <input id="billingAddress_Street" name="billingAddress_Street" [(ngModel)]="model.billingAddress_street"  type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="billingAddress_Country">Country</label>
+                            <input id=" billingAddress_Country" name="billingAddress_Country" [(ngModel)]="model.billingAddress_country"  type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="billingAddress_Telephone">Phone Number</label>
+                            <input id="billingAddress_Telephone" name="billingAddress_Telephone" [(ngModel)]="model.billingAddress_phoneNumber"  type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  
+                  <error-alert *ngIf="error" [errorModel]="error"></error-alert> 
+                </div>
+              
+                <div class="box-footer d-flex justify-content-between"><a href="#" [routerLink]="['/Basket/Shopping-Cart']" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to Basket</a>
+                  <button type="submit" class="btn btn-primary">Continue to Delivery Method<i class="fa fa-chevron-right"></i></button>
+                </div>
+              </form>
+             
+            </div>
+            <!-- /.box-->
+          </div>
+          <!-- /.col-lg-9-->
+          <div class="col-lg-3">
+            <div id="order-summary" class="card">
+              <div class="card-header">
+                <h3 class="mt-4 mb-4">Order summary</h3>
+              </div>
+              <div class="card-body">
+                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>Order subtotal</td>
+                        <th>£{{totalAmount | number : '1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Shipping and handling</td>
+                        <th>£{{shippingCost | number : '1.2-2'}}</th>
+                      </tr>
+                      <tr>
+                        <td>Tax</td>
+                        <th>£0.00</th>
+                      </tr>
+                      <tr class="total">
+                        <td>Total</td>
+                        <th>£{{totalAmount + 10 | number : '1.2-2'}}</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-lg-3-->
+        </div>
+      </div>
+    </div>
+   
+  </div>

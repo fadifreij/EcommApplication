@@ -1,0 +1,14 @@
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\obj\Debug\netcoreapp3.1\UnitTest.AssemblyInfoInputs.cache
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\obj\Debug\netcoreapp3.1\UnitTest.AssemblyInfo.cs
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\UnitTest.deps.json
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\UnitTest.runtimeconfig.json
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\UnitTest.runtimeconfig.dev.json
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\UnitTest.dll
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\BusinessLayer.dll
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\DAL.dll
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\BusinessLayer.pdb
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\DAL.pdb
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\obj\Debug\netcoreapp3.1\UnitTest.csproj.CopyComplete
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\bin\Debug\netcoreapp3.1\UnitTest.pdb
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\obj\Debug\netcoreapp3.1\UnitTest.dll
+D:\Ecomm_AspNetCore\ECommerceProject\XUnitTestProject\obj\Debug\netcoreapp3.1\UnitTest.pdb

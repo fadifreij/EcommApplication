@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiApplication</name>
+    </assembly>
+    <members>
+        <member name="M:ApiApplication.Controllers.BasketController.AddNewBaskek(DAL.Models.Basket)">
+            <summary>
+            Add Update Basket and Basket Items to the system
+            
+            
+            </summary>
+            <remarks>
+             **POST** /api/Basket/Save <br/>
+            { <br/>
+              "buyerId": "string", <br/>
+              "basketItems": [ <br/>
+                  { <br/>
+                     "basketId": 0, <br/>
+                     "qty": 0, <br/>
+                     "unitPrice": 0, <br/>
+                     "discount": 0,  <br/>
+                      "itemsId": 1,<br/>
+                      "recentlyViewed":true, <br/>
+                      "inBasket":false <br/>
+                       }] <br/>
+                       }
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.BasketController.DeleteBasket(System.Int32)">
+            <summary>
+            Delete BasketItem from Basket if all basket items deleted then all the basket will deleted
+            </summary>
+            <remarks>
+            { 
+              2 
+            }
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.CheckOutController.Index(ApiApplication.Models.CheckoutViewModel)">
+             <summary>
+             CheckOut the Order
+             </summary>
+            <remarks>
+             **POST** /api/CheckOut
+             <br/>
+              { <br/>
+                "orderBillingAddress": {  <br/>
+                    "postCode": "string",  <br/>
+                    "street": "string",  <br/>
+                    "country": "string",  <br/>
+                    "telephone": "string"  <br/>
+               }, <br/>
+                 "orderShippingAddress": {  <br/>
+                 "postCode": "string",  <br/>
+                 "street": "string",  <br/>
+                 "country": "string",  <br/>
+                 "telephone": "string"  <br/>
+                  }, <br/>
+                    "slotDelivery": {  <br/>
+                    "deliveryDate": "2020-04-14",  <br/>
+                    "slotNumber": 54254255425,  <br/>
+                    "slotPrice": 1.5,  <br/>
+                    "slotName" : [9am-12am] <br/>
+                    "maxNumberOfDelivery": 10,  <br/>
+                        }
+                        }
+             </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.ItemsController.AddNewItem(ApiApplication.Models.ItemsViewModel)">
+             <summary>
+              Add New Items 
+             </summary>
+             <remarks>
+             Sample requests :
+              **POST**  /api/Items/Add
+               
+               { 
+                   "Id" : 1 ,// do not  add id when inserting <br/>
+                   "ItemName" : "test- item name",  <br/>
+                   "ItemLongName" : "test - long name ", <br/>
+                   "Show" : true , <br/>
+                   "ItemCode" : "12525425225", <br/>
+                   "Qty"  : 2, <br/>
+                   "Discount" : 0.32, <br/>
+                   "Price" : 38.2, <br/>
+                   "ItemDetails" : "test- item detail", <br/>
+                   "ProductsId" : 1, <br/>
+                   "CurrencyId" : 1, <br/>
+                   "CategoryId" : 1,
+                   "BrandId" : 1,  <br/>
+                   "ProductColorId" : 1, <br/>
+                   "SizeId" : 1, <br/>
+                   "FavoriteImage" : image, <br/>
+                   "Images" : List of images <br/>
+                 }  
+                   
+             </remarks>
+             
+            <response code ="200"> Items Inserted Successfully</response>
+            <response code="400"> Unable to Create new Item</response>
+        </member>
+        <member name="M:ApiApplication.Controllers.ItemsThisWeekController.AddNewItem(DAL.Models.ItemsThisWeek)">
+            <summary>
+             Adding  This week Items
+            </summary>
+            <remarks>
+             **POSt** /api/ItemsThisWeek/Add
+              { 
+                "itemsId": 2
+               }
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.ItemsThisWeekController.DeleteItem(System.Int32)">
+            <summary>
+             Delete  This week Items
+            </summary>
+            <remarks>
+             **DELETE** /api/ItemsThisWeek/Delete
+              { 
+                 2
+               }
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.MainMenuController.GetAllActiveMainMenu">
+            <summary>
+            Get The MainMenu with Show = true
+            </summary>
+        </member>
+        <member name="M:ApiApplication.Controllers.MainMenuController.GetAll">
+            <summary>
+             Return All the MainMenu
+            </summary>
+            <response code="200"> All the Main Menu loaded Successfully </response>
+        </member>
+        <member name="M:ApiApplication.Controllers.MainMenuController.AddMainMenu(DAL.Models.MainMenu)">
+            <summary>
+             Adding or update MainMenu to the system
+            </summary>
+            <remarks>
+            Sample requests :
+            
+             **POST** /api/MainMenu/Add
+             
+                 {    
+                      "Id" : 1   // if add new do not put Id
+                      "mainMenuName" : "test",
+                      "show" : true
+               
+                 }
+            </remarks>
+            <param name="menu"></param>
+            <response code ="201"> MainMenu Created </response>
+            <response code ="200"> MainMenu Updated </response>
+            <response code ="400"> Unable to Create MainMenu due to validation error</response>
+        </member>
+        <member name="M:ApiApplication.Controllers.MainMenuController.DeleteMainMenu(System.Int32)">
+            <summary>
+            Deleting MainMenu from the system
+            </summary>
+            <remarks>
+             **DELETE** /api/MainMenu/Delete
+             
+                2
+            
+            
+            </remarks>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApplication.Controllers.ProductsController.GetAllActiveProducts">
+            <summary>
+             Get All Active Products for Main Menu 
+            </summary>
+            <remarks>
+             **GET** /api/Products/GetAllActive
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.ProductsController.GetAllProducts(System.Int32)">
+            <summary>
+             Get All  Products for admin Page to update the products name 
+            </summary>
+            <remarks>
+             **GET** /api/Products/GetAll
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.ProductsController.GetItemsForProduct(System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String)">
+            <summary>
+             Get All Items in Product for MainMenu Page  
+            </summary>
+            <remarks>
+             **GET** /api/Products/GetItemsForProduct/{ProductId}
+             
+             <br/>
+              **Optional Parameter**<br/>
+              <paramref name="CategoryId"/><br/>
+              <paramref name="BrandId"/><br/>
+              <paramref name="ProductColorId"/><br/>
+              <paramref name="SizeId"/><br/>
+              <paramref name="skip"/><br/>
+              <paramref name="take"/><br/>
+              <paramref name="OrderbyName"/> -- (name,price) <br/>
+              <paramref name="OrderBy"/> -- (asc,desc)
+             
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.ProductsController.AddProduct(DAL.Models.Products)">
+            <summary>
+            Add - Update Product to the system
+            </summary>
+            <remarks>
+            **POST**  /api/Products/Add
+            <br/>
+             {
+               "Id" : 1 // do not put Id on new product <br/>
+               "productName": "string",<br/>
+               "show": true, <br/>
+               "subMainMenuId": 0 <br/>
+                  }
+             
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApplication.Controllers.ProductsController.DeleteProduct(System.Int32)">
+            <summary>
+            Delete Product from System
+            </summary>
+            <remarks>
+             **DELETE**  /api/Products/Delete
+            <br/>
+            { 1
+             }
+            
+            </remarks>
+        </member>
+        <member name="M:ApiApplication.Controllers.SubMainMenuController.AddSubMainMenu(DAL.Models.SubMainMenu)">
+            <summary>
+               Adding SubMainMenu and the Id of mainmenu that linked to
+            </summary>
+            <remarks>
+            **POST** /api/SubMainMenu/Add
+                 {
+                     "Id" : 1  // do not put Id if you add 
+                     "subMainMenuName": "string",
+                     "show": true,
+                     "mainMenuId" : 1
+            
+                 }
+            
+            </remarks>
+            <param name="submainmenu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiApplication.Controllers.WeatherForecastController.Get">
+            <summary>
+             Returns All the forcast in the system
+            </summary>
+            <response code = "200"> Returns all the forcase in the system</response>
+            <response code = "400"> Unable to create the </response>    
+        </member>
+    </members>
+</doc>
